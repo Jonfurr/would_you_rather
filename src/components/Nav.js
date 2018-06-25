@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
-import { NavLink } from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 import {connect} from 'react-redux'
-import { setAuthedUser } from '../actions/authedUser'
+import {setAuthedUser} from '../actions/authedUser'
 class Nav extends Component {
 
   handleLogout = (e) => {
@@ -9,7 +9,7 @@ class Nav extends Component {
     const {dispatch} = this.props
     dispatch(setAuthedUser(null))
   }
-  
+
   render() {
     return (
       <nav className='nav'>

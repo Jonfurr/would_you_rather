@@ -8,14 +8,17 @@ export default function questions(state = {}, action) {
         ...action.questions
       }
     case TOGGLE_QUESTION_ANSWER:
-  
+
       return {
         ...state,
         [action.questions[action.id].id]: {
           ...action.questions[action.id],
           [action.value]: {
             text: action.answer.text,
-            votes: action.answer.votes.concat(action.authedUser)
+            votes: action
+              .answer
+              .votes
+              .concat(action.authedUser)
           }
         }
       }
@@ -25,17 +28,15 @@ export default function questions(state = {}, action) {
         ...state,
         [action.question.id]: {
           ...action.question,
-            optionOne: {
-              votes: [],
-              text: action.question.optionOne.text
-            },
-            optionTwo: {
-              votes: [],
-              text: action.question.optionTwo.text
-            }
+          optionOne: {
+            votes: [],
+            text: action.question.optionOne.text
+          },
+          optionTwo: {
+            votes: [],
+            text: action.question.optionTwo.text
+          }
         }
-        
-        
 
       }
     default:

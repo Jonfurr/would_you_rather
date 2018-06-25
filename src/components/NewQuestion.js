@@ -1,9 +1,7 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { handleAddQuestion } from '../actions/questions'
-import { Redirect } from 'react-router-dom'
-
-
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {handleAddQuestion} from '../actions/questions'
+import {Redirect} from 'react-router-dom'
 
 class NewQuestion extends Component {
 
@@ -15,35 +13,33 @@ class NewQuestion extends Component {
 
   handleChangeOne = (e) => {
     const text = e.target.value
-    this.setState(() => ({
-      optionOne: text
-    }))
+    this.setState(() => ({optionOne: text}))
   }
 
   handleChangeTwo = (e) => {
     const text = e.target.value
-    this.setState(() => ({
-      optionTwo: text
-    }))
+    this.setState(() => ({optionTwo: text}))
   }
-  
+
   handleSubmit = (e) => {
     e.preventDefault()
-    const { optionOne, optionTwo } = this.state
-    const { dispatch, id, authedUser } = this.props
+    const {optionOne, optionTwo} = this.state
+    const {dispatch, id, authedUser} = this.props
     dispatch(handleAddQuestion(authedUser, optionOne, optionTwo))
 
     this.setState(() => ({
       optionOne: '',
       optionTwo: '',
-      toHome: id ? false : true
+      toHome: id
+        ? false
+        : true
     }))
   }
 
   render() {
-    const { optionOne, optionTwo, toHome } = this.state
+    const {optionOne, optionTwo, toHome} = this.state
     if (toHome === true) {
-      return <Redirect to='/' />
+      return <Redirect to='/'/>
     }
     return (
       <div className='container'>
@@ -52,25 +48,22 @@ class NewQuestion extends Component {
           <div className='input-container'>
             <input
               placeholder="Answer One"
-              type= 'text'
+              type='text'
               value={optionOne}
               onChange={this.handleChangeOne}
-              className='center input'
-            />
+              className='center input'/>
             <input
               placeholder="Answer Two"
               type='text'
               value={optionTwo}
               onChange={this.handleChangeTwo}
-              className='center input'
-            />
+              className='center input'/>
           </div>
-         
+
           <button
             className='btn submit-btn'
             type='submit'
-            disabled={optionOne === '' || optionTwo === ''}
-          >
+            disabled={optionOne === '' || optionTwo === ''}>
             Ask!
           </button>
         </form>
@@ -79,10 +72,8 @@ class NewQuestion extends Component {
   }
 }
 
-function mapStateToProps ({ authedUser }) {
-  return {
-    authedUser
-  }
+function mapStateToProps({authedUser}) {
+  return {authedUser}
 }
 
 export default connect(mapStateToProps)(NewQuestion)

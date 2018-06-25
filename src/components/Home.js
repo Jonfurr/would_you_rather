@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
-
 class Home extends Component {
 
   handleToggle = (e) => {
@@ -10,8 +9,12 @@ class Home extends Component {
 
     const lists = document.querySelectorAll('.question-list')
     const title = document.querySelector('.questions-title');
-    lists[0].classList.toggle('active')
-    lists[1].classList.toggle('active')
+    lists[0]
+      .classList
+      .toggle('active')
+    lists[1]
+      .classList
+      .toggle('active')
 
     if (lists[0].classList.contains('active')) {
       e.target.innerHTML = 'Show Unanswered Questions'
@@ -24,38 +27,32 @@ class Home extends Component {
   }
 
   render() {
-    const {questionIds, answeredIds } = this.props
-    
-  
-    let filtered = questionIds.filter(
-      function (e) {
-        return this.indexOf(e) < 0;
-      },
-      answeredIds
-    )
-    
+    const {questionIds, answeredIds} = this.props
+
+    let filtered = questionIds.filter(function (e) {
+      return this.indexOf(e) < 0;
+    }, answeredIds)
+
     return (
       <div className='container'>
         <h2 className='questions-title center'>Your Unanswered Questions</h2>
         <ol className='question-list answered'>
-          {
-            answeredIds
-              .map((id) => (
-                <li key={id}>
-                  <Link to={`/question/${id}`} id={id}> <span>{
-`${this.props.questions[id].optionOne.text} OR ${this.props.questions[id].optionTwo.text}?`
-                  }</span></Link>
-                </li>
-              ))}
+          {answeredIds.map((id) => (
+            <li key={id}>
+              <Link to={`/question/${id}`} id={id}>
+                <span>{`${this.props.questions[id].optionOne.text} OR ${this.props.questions[id].optionTwo.text}?`
+}</span>
+              </Link>
+            </li>
+          ))}
         </ol>
         <ol className='question-list unanswered active'>
-          {
-          filtered
-          .map((id) => (
+          {filtered.map((id) => (
             <li key={id}>
-              <Link id={id}to={`/question/${id}`}> <span>{
-                `${this.props.questions[id].optionOne.text} OR ${this.props.questions[id].optionTwo.text}?`
-              }</span></Link>
+              <Link to={`/question/${id}`} id={id}>
+                <span>{`${this.props.questions[id].optionOne.text} OR ${this.props.questions[id].optionTwo.text}?`
+}</span>
+              </Link>
             </li>
           ))}
         </ol>
@@ -67,7 +64,7 @@ class Home extends Component {
   }
 }
 
-function mapStateToProps({ questions, users, authedUser,  }) {
+function mapStateToProps({questions, users, authedUser}) {
   const userId = users[authedUser]
   const answers = userId.answers
 
@@ -78,7 +75,7 @@ function mapStateToProps({ questions, users, authedUser,  }) {
     answeredIds: Object
       .keys(answers)
       .sort((a, b) => answers[b].timestamp - questions[a].timestamp),
-      questionIds: Object
+    questionIds: Object
       .keys(questions)
       .sort((a, b) => questions[b].timestamp - questions[a].timestamp)
   }

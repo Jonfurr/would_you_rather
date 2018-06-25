@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import Question from './Question'
 import {connect} from 'react-redux'
 
-
 class QuestionPage extends Component {
   render() {
     return (
